@@ -16,35 +16,35 @@ namespace PaintProgram
         Bitmap myBitmap;
         public Form1()
         {
-            myBitmap = new Bitmap(640, 480);
+            myBitmap = new Bitmap(640, 480); //create off screen bitmap
             InitializeComponent();
         }
 
         private void Form1_MouseDown(object sender, MouseEventArgs e)
         {
-            mouseDown = true;
+            mouseDown = true; //flag mouse button down
         }
 
         private void Form1_MouseUp(object sender, MouseEventArgs e)
         {
-            mouseDown = false;
+            mouseDown = false; //flag mouse button up
         }
 
         private void Form1_MouseMove(object sender, MouseEventArgs e)
         {
             if (mouseDown == false)
-                return;
-            Graphics g = Graphics.FromImage(myBitmap);
+                return; //mouse not down so nothing to do
+            Graphics g = Graphics.FromImage(myBitmap); //get graphics contex of off screen bitmap
             Pen p = new Pen(Color.Red, 2);
-            g.DrawLine(p, e.X, e.Y, e.X + 1, e.Y + 1);
+            g.DrawLine(p, e.X, e.Y, e.X + 1, e.Y + 1); //draw a point on off screen bitmap
             p.Dispose();
-            Refresh();
+            Refresh(); //signify that something has been draw and windowing system should update the display
         }
 
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
-            Graphics g = e.Graphics;
-            g.DrawImageUnscaled(myBitmap, 0, 0);
+            Graphics g = e.Graphics; //get graphics context of form (which is being displayed)
+            g.DrawImageUnscaled(myBitmap, 0, 0); //put the off screen bitmap on the form
         }
     }
 }
